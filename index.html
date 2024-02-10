@@ -3,12 +3,34 @@
 	<head>
 	   <meta charset="UTF-8">
 	   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	   <link rel="stylesheet" href="styles/spectre.min.css">
+	   <link rel="stylesheet" href="styles/spectre-exp.min.css">
+	   <link rel="stylesheet" href="styles/spectre-icons.min.css">
 	   <link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
 		<div class="loadContainer">
-			<img src="./images/totkBackground.jpeg" alt="background" id="background"
-			
+			<div class="blur-effect" id="background"></div>
+			<div class="logoContainer">
+				<img src="./images/TotK_English_Logo.webp" alt="logo" id="loadLogo">
+			</div>
+			<div class="navbar" id="navHeader">
+				<section class="navbar-section">
+					<figure class="avatar avatar-xl">
+						<img class="swordIcon" src="./images/masterSword.png" alt="...">
+					  </figure>
+				</section>
+				<section class="navbar-section">
+				  <div class="input-group input-inline">
+					<input class="form-input" type="text" placeholder="Search">
+					<button class="btn btn-primary input-group-btn" id="searchButton" onclick="testRequest()">Search</button>
+				  </div>
+				</section>
+			</div>
 		</div>
+		<main id="main">
+		</main>
+		<script src="./scripts/script.js"></script>
 	</body>
 </html>
+

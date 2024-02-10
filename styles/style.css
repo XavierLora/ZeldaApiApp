@@ -1,0 +1,185 @@
+
+body{
+    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.loadContainer{
+  width: 100%;
+  height: 100vh;
+}
+.blur-effect{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/totkBackground.jpeg);
+    background-position: center;
+    background-size: 500px;
+    filter: blur(5px);
+    -webkit-animation: blurAnimation 4s linear forwards;
+    animation: blurAnimation 4s linear forwards;
+}
+.logoContainer{
+    transition: opacity .5s ease-out;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    text-align: center;
+}
+#loadLogo{
+    width: 100%;
+    -webkit-animation: fadeinout 4s linear forwards;
+    animation: fadeinout 4s linear forwards;
+}
+#navHeader{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 2vh;
+    -webkit-animation: fadein 2s linear forwards;
+    animation: fadein 2s linear forwards;
+    animation-delay: 4s;
+    opacity: 0;
+    background-color: #373737;
+    border-bottom-left-radius: 2vh;
+    border-bottom-right-radius: 2vh;
+    font-size: 200%;
+    z-index: 100;
+}
+a{
+    color: white;
+}
+a:visited{
+    text-decoration: none;
+    color: white;
+}
+a:hover{
+    text-decoration: none;
+    color: white;
+}
+#main {
+    height: 95vh;
+    overflow: scroll;
+    padding: 2rem;
+    display: grid;
+    grid-gap: 2rem;
+    grid-auto-rows: max-content;
+    grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+    padding: 1vh;
+    -webkit-animation: fadein 2s linear forwards;
+    animation: fadein 2s linear forwards;
+    animation-delay: 4s;
+    opacity: 0;
+    position: fixed;
+    top: 10vh;
+    padding-top: 2vh;
+    width: 100%;
+    place-items: center;
+    padding-bottom: 10vh;
+    scrollbar-width: thin;
+
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */  
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: none !important;
+        background-color: transparent;
+    }  
+    ::-webkit-scrollbar {
+        width: 3px !important;
+        background-color: transparent;
+    }  
+    ::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+}
+.on-scrollbar{
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+  
+  .on-scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: none !important;
+    background-color: transparent !important;
+  }
+  
+  .on-scrollbar::-webkit-scrollbar {
+    width: 6px !important;
+    background-color: transparent;
+  }
+  
+  .on-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #acacac;
+  }
+.card{
+    width: 60%;
+    border-radius: 1vh;
+}
+#searchButton{
+    background-color: #60c996;
+    border-color: #60c996;
+    border-top-right-radius: 1vh;
+    border-bottom-right-radius: 1vh;
+}
+.form-input{
+    border-top-left-radius: 1vh;
+    border-bottom-left-radius: 1vh;
+}
+.avatar{
+    background-color: #373737;
+}
+.swordIcon{
+    filter: invert(1);
+}
+
+@media (min-width: 1250px){
+    #loadLogo{
+        width: 40%;
+    }
+    .card{
+        width: 80%;
+        
+    }
+}
+
+
+
+@keyframes blurAnimation{
+    from {
+        filter: blur(5px);
+    }
+    to {
+        filter: blur(1px);
+    }
+}
+
+@keyframes unblurAnimation{
+    from {
+        filter: blur(0);
+    }
+    to {
+        filter: blur(5px);
+    }
+}
+
+@-webkit-keyframes fadeinout {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+  
+@keyframes fadeinout {
+    0%,100% { opacity: 0;}
+    50% { opacity: 1;}
+}
+
+@-webkit-keyframes fadein {
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+}
+  
+@keyframes fadein {
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+}
