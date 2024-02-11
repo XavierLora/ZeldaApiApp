@@ -137,6 +137,13 @@ a:hover{
 .swordIcon{
     filter: invert(1);
 }
+#searchIcon{
+    font-size: 125%;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
 @media (min-width: 1250px){
     #loadLogo{
         width: 40%;
