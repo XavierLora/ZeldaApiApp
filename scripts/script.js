@@ -13,6 +13,39 @@ const testRequest = async () => {
     }
 }
 
+document.getElementById("savedCards").addEventListener("click", function(){
+    fadeMain();
+    const testRequest2 = async () => {
+        const responseTest2 = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/creatures');
+        const myJsonTest2 = await responseTest2.json();
+        showSavedCards(myJsonTest2);
+    }
+    testRequest2();
+});
+
+function fadeMain(){
+    const mainElement = document.getElementById("main");
+    mainElement.classList.add("fadeOutIn");
+    console.log("fadeMain triggered, class added:", mainElement.classList.contains("fadeOutIn"));
+}
+
+
+const showSavedCards = (obj) => {
+    removeCurrentCards();
+    for(var i = 0; i < obj.data.length; i++){
+        var object = obj.data[i];
+        displayTypeCard(object);
+    }
+}
+
+function removeCurrentCards(){
+    const myNode = document.getElementById("main");
+    while(myNode.firstChild){
+        myNode.removeChild(myNode.lastChild);
+    }
+} 
+
+
 window.addEventListener('scroll', this.handleScroll, true);
 
 handleScroll = (e) => {

@@ -31,8 +31,8 @@ body{
 }
 #loadLogo{
     width: 100%;
-    -webkit-animation: fadeinout 4s linear forwards;
-    animation: fadeinout 4s linear forwards;
+    -webkit-animation: fadeinout 3s linear forwards;
+    animation: fadeinout 3s linear forwards;
 }
 #navHeader{
     position: absolute;
@@ -41,7 +41,7 @@ body{
     padding: 2vh;
     -webkit-animation: fadein 2s linear forwards;
     animation: fadein 2s linear forwards;
-    animation-delay: 4s;
+    animation-delay: 3s;
     opacity: 0;
     background-color: #373737;
     border-bottom-left-radius: 2vh;
@@ -60,6 +60,10 @@ a:hover{
     text-decoration: none;
     color: white;
 }
+.navbar-section i{
+    color: white;
+    font-size: 75%;
+}
 #main {
     height: 95vh;
     overflow: scroll;
@@ -75,7 +79,7 @@ a:hover{
     opacity: 0;
     position: fixed;
     top: 10vh;
-    padding-top: 2vh;
+    padding-top: 5vh;
     width: 100%;
     place-items: center;
     padding-bottom: 10vh;
@@ -144,8 +148,6 @@ a:hover{
     }
 }
 
-
-
 @keyframes blurAnimation{
     from {
         filter: blur(5px);
@@ -163,6 +165,28 @@ a:hover{
         filter: blur(5px);
     }
 }
+
+#main.fadeOutIn{
+    animation: fadeOutIn 2.25s linear forwards;
+    -webkit-animation: fadeOutIn 2.25s linear forwards;
+}
+
+@-webkit-keyframes fadeOutIn {
+    0% { opacity: 1; }
+    10% { opacity: 0; }
+    25% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+  
+@keyframes fadeOutIn {
+    0% { opacity: 1; }
+    10% { opacity: 0; }
+    25% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 
 @-webkit-keyframes fadeinout {
     0%,100% { opacity: 0; }
