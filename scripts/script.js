@@ -19,6 +19,7 @@ document.getElementById("savedCards").addEventListener("click", function(){
         const responseTest2 = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/creatures');
         const myJsonTest2 = await responseTest2.json();
         showSavedCards(myJsonTest2);
+        document.getElementById('main').scrollTop = 0;
     }
     testRequest2();
 });
@@ -99,6 +100,7 @@ const cardFactory = (obj) => {
     </div>`;
     return makeCard;
 }
+
 
 function displayCard(obj) {
     let parentNode = document.getElementById('main');
