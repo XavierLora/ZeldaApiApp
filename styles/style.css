@@ -137,7 +137,6 @@ a:hover{
 .swordIcon{
     filter: invert(1);
 }
-
 @media (min-width: 1250px){
     #loadLogo{
         width: 40%;
