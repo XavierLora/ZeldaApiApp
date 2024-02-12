@@ -123,10 +123,12 @@ a:hover{
     border-radius: 1vh;
 }
 #searchButton{
+    position: relative;
     background-color: #60c996;
     border-color: #60c996;
     border-top-right-radius: 1vh;
     border-bottom-right-radius: 1vh;
+    width: 5vh;
 }
 .form-input{
     border-top-left-radius: 1vh;
@@ -139,16 +141,18 @@ a:hover{
     filter: invert(1);
 }
 #searchIcon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 125%;
-    text-align: center;
-    justify-self: center;
-    align-self: center;
 }
 #removeCross{
     position: absolute;
-    top: 0.5vh;
-    right: 0.5vh;
+    top: 0.75vh;
+    right: 0.75vh;
     color: white;
+    font-size: 150%;
 }
 
 @media (min-width: 1250px){
