@@ -50,6 +50,23 @@ body{
     font-size: 200%;
     z-index: 100;
 }
+#typeText{
+    color: white;
+    border-radius: 1vh;
+    align-items: center;
+}
+#typeCarrot{
+    font-size: 125%;
+}
+.form-checkbox{
+    font-size: 50%;
+}
+.navbar-section{
+    gap: 1vh;
+}
+#savedCards{
+    font-size: 90%;
+}
 a{
     color: white;
 }
@@ -155,6 +172,13 @@ a:hover{
     right: 0.75vh;
     color: white;
     font-size: 150%;
+}
+.saveIcon{
+    position: absolute;
+    bottom: 2vh;
+}
+.saveIcon.changeColor{
+    filter: invert(1);
 }
 
 @media (min-width: 1250px){
