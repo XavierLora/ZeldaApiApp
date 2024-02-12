@@ -33,6 +33,7 @@ body{
     width: 100%;
     -webkit-animation: fadeinout 3s linear forwards;
     animation: fadeinout 3s linear forwards;
+    filter: invert(1);
 }
 #navHeader{
     position: absolute;
@@ -124,8 +125,8 @@ a:hover{
 }
 #searchButton{
     position: relative;
-    background-color: #60c996;
-    border-color: #60c996;
+    background-color: #373737;
+    border-color: white;
     border-top-right-radius: 1vh;
     border-bottom-right-radius: 1vh;
     width: 5vh;
@@ -133,6 +134,7 @@ a:hover{
 .form-input{
     border-top-left-radius: 1vh;
     border-bottom-left-radius: 1vh;
+    border-color: white;
 }
 .avatar{
     background-color: #373737;
