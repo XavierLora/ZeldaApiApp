@@ -62,6 +62,7 @@ const cardMachine = (obj) => {
     `<div class="card">
         <div class="card-image">
             <img src="${obj.image}" class="img-responsive">
+            <i class="icon icon-cross" id="removeCross" onClick="this.parentElement.parentElement.remove();"></i>
         </div>
         <div class="card-header">
             <div class="card-title h5">${capitalizedName}</div>
@@ -85,6 +86,7 @@ const cardFactory = (obj) => {
     `<div class="card">
         <div class="card-image">
             <img src="${obj.data.image}" class="img-responsive">
+            <i class="icon icon-cross" id="removeCross" onClick="this.parentElement.parentElement.remove();"></i>
         </div>
         <div class="card-header">
             <div class="card-title h5">${capitalizedName}</div>

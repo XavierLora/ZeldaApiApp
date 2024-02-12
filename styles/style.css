@@ -118,6 +118,7 @@ a:hover{
     background-color: #acacac;
   }
 .card{
+    position: relative;
     width: 60%;
     border-radius: 1vh;
 }
@@ -142,6 +143,12 @@ a:hover{
     text-align: center;
     justify-self: center;
     align-self: center;
+}
+#removeCross{
+    position: absolute;
+    top: 0.5vh;
+    right: 0.5vh;
+    color: white;
 }
 
 @media (min-width: 1250px){
