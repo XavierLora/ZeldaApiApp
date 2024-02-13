@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 CreatureCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
-        fadeMain();
         const creatureRequest = async () => {
+            fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/creatures');
             const myJsonData = await data.json();
             console.log(myJsonData);
@@ -37,8 +37,8 @@ CreatureCheckBox.addEventListener('change', function(){
 
 EquipmentCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
-        fadeMain();
         const equipmentRequest = async () => {
+            fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/equipment');
             const myJsonData = await data.json();
             for(var i = 0; i < myJsonData.data.length; i++){
@@ -57,8 +57,8 @@ EquipmentCheckBox.addEventListener('change', function(){
 
 MaterialCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
-        fadeMain();
         const equipmentRequest = async () => {
+            fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/materials');
             const myJsonData = await data.json();
             for(var i = 0; i < myJsonData.data.length; i++){
@@ -76,8 +76,8 @@ MaterialCheckBox.addEventListener('change', function(){
 
 MonsterCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
-        fadeMain();
         const equipmentRequest = async () => {
+            fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/monsters');
             const myJsonData = await data.json();
             for(var i = 0; i < myJsonData.data.length; i++){
@@ -93,17 +93,12 @@ MonsterCheckBox.addEventListener('change', function(){
     }
 });
 
-
-
 document.getElementById("savedCards").addEventListener("click", function(){
-    fadeMain();
-    const testRequest2 = async () => {
-        const responseTest2 = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/creatures');
-        const myJsonTest2 = await responseTest2.json();
-        showSavedCards(myJsonTest2);
+    const savedCardsCall = async () => {
+        showSavedCards();
         document.getElementById('main').scrollTop = 0;
     }
-    testRequest2();
+    savedCardsCall();
 });
 
 function fadeMain(){
@@ -113,12 +108,16 @@ function fadeMain(){
 }
 
 
-const showSavedCards = (obj) => {
+function showSavedCards(){
     uncheckAllCheckboxes();
     removeCurrentCards();
     const savedCardData = getSavedCardData();
-    console.log(savedCardData);
-    displayTypeCard(savedCardData);
+    const cardDataRetreived = Object(savedCardData);
+    console.log(cardDataRetreived);
+    for(var i = 0; i < cardDataRetreived.length; i++){
+        var obj = cardDataRetreived[i];
+        displayTypeCard(obj);
+    }
 }
 
 function removeCurrentCards(){
@@ -208,18 +207,20 @@ document.addEventListener('click', function(event) {
         };
         console.log(cardData);
         // Save cardData to local storage
-        let savedCardData = getSavedCardData() || [];
+        let savedCardData = getSavedCardData();
+        const cardDataRetreived = Object(savedCardData);
+        const cardExists = cardDataRetreived.some(savedCard => savedCard.id === cardData.id);
 
-        let exists = savedCardData.findIndex(item => item.id === cardData.id) !== -1;
-
-        if (!exists) {
+        if(!cardExists){
+            console.log("Card doesnt exists adding now");
             // If the card data doesn't exist, add it to savedCardData
-            savedCardData.push(cardData);
+            cardDataRetreived.push(cardData);
 
             // Update localStorage with the new savedCardData
-            localStorage.setItem('savedCard', JSON.stringify(savedCardData));
-
+            localStorage.setItem('savedCard', JSON.stringify(cardDataRetreived));
             // Update the UI to display the saved card
+        }else{
+            console.log("Card already exists");
         }
     }
 });
