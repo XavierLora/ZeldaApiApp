@@ -100,7 +100,7 @@ a:hover{
     padding-top: 5vh;
     width: 100%;
     place-items: center;
-    padding-bottom: 10vh;
+    padding-bottom: 12.5vh;
     scrollbar-width: thin;
 
     scrollbar-width: none; /* Firefox */
@@ -177,9 +177,36 @@ a:hover{
     position: absolute;
     bottom: 2vh;
 }
-.saveIcon.changeColor{
-    filter: invert(1);
+.savedCards-pressed::before {
+    background-color: white;
+    border-color: white;
 }
+.savedCards-pressed::after {
+    background-color: #373737;
+    
+}
+.savedCardsMain-pressed::before{
+    background-color: #373737;
+    border-color: #373737;
+}
+.savedCardsMain-pressed::after{
+    background-color: white;
+}
+#toastMsg{
+        position: fixed;
+        bottom: 20px; /* Adjust as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #373737;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: none;
+        width: fit-content;
+        text-align: center;
+        text-wrap: wrap;
+}
+
 
 @media (min-width: 1250px){
     #loadLogo{

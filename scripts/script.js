@@ -11,11 +11,22 @@ function uncheckAllCheckboxes() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    uncheckAllCheckboxes();
+    showSavedCards();
+    setTimeout(function() {
+        var toast = document.getElementById('toastMsg');
+        toast.textContent = "No Items Saved Yet, Click the Drop Down Above!";
+        toast.style.display = 'block';
+        setTimeout(function() {
+            toast.style.display = 'none';
+        }, 5000); // Adjust the timeout (milliseconds) as needed
+    }, 4000);
 });
 
 CreatureCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+            document.getElementById("savedCards").classList.remove("savedCards-pressed");
+        }
         const creatureRequest = async () => {
             fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/creatures');
@@ -37,6 +48,9 @@ CreatureCheckBox.addEventListener('change', function(){
 
 EquipmentCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+            document.getElementById("savedCards").classList.remove("savedCards-pressed");
+        }
         const equipmentRequest = async () => {
             fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/equipment');
@@ -57,6 +71,9 @@ EquipmentCheckBox.addEventListener('change', function(){
 
 MaterialCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+            document.getElementById("savedCards").classList.remove("savedCards-pressed");
+        }
         const equipmentRequest = async () => {
             fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/materials');
@@ -76,6 +93,9 @@ MaterialCheckBox.addEventListener('change', function(){
 
 MonsterCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+            document.getElementById("savedCards").classList.remove("savedCards-pressed");
+        }
         const equipmentRequest = async () => {
             fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/category/monsters');
@@ -94,11 +114,17 @@ MonsterCheckBox.addEventListener('change', function(){
 });
 
 document.getElementById("savedCards").addEventListener("click", function(){
+    if(this.classList.contains("savedCards-pressed")){
+        removeCurrentCards();
+        this.classList.toggle("savedCards-pressed");
+    }else{
+        this.classList.toggle("savedCards-pressed");
     const savedCardsCall = async () => {
         showSavedCards();
         document.getElementById('main').scrollTop = 0;
     }
     savedCardsCall();
+    }
 });
 
 function fadeMain(){
@@ -149,33 +175,20 @@ handleScroll = (e) => {
 const cardMachine = (obj) => {
     let capitalizedCategory = obj.category.charAt(0).toUpperCase() + obj.category.substring(1);
     let capitalizedName = obj.name.charAt(0).toUpperCase() + obj.name.substring(1);
-    const makeCard = 
-    `<div class="card">
-        <div class="card-image">
-            <img src="${obj.image}" class="img-responsive">
-            <i class="icon icon-cross" id="removeCross" onClick="this.parentElement.parentElement.remove();"></i>
-        </div>
-        <div class="card-header">
-            <div class="card-title h5">${capitalizedName}</div>
-            <div class="card-subtitle text-gray">${obj.id}</div>
-        </div>
-        <div class="card-body">
-            <div id="cardCategory" class="card-subtitle">Category: ${capitalizedCategory}</div>
-        </div>
-        <div class="card-footer">
-            <i class="icon icon-bookmark saveIcon"></i>
-        </div>
-    </div>`;
+    const savedCardData = getSavedCardData();
+    const cardDataRetreived = Object(savedCardData);
+    const cardExists = cardDataRetreived.some(savedCard => savedCard.id === obj.id);
+    
 
-
-    return makeCard;
+    let bookmarkClass;
+    if (cardExists) {
+        bookmarkClass = "icon icon-bookmark saveIcon savedCardsMain-pressed";
+        console.log("Saved Card");
+    } else {
+        bookmarkClass = "icon icon-bookmark saveIcon";
+    }
 
     
-}
-
-const cardFactory = (obj) => {
-    let capitalizedCategory = obj.category.charAt(0).toUpperCase() + obj.category.substring(1);
-    let capitalizedName = obj.name.charAt(0).toUpperCase() + obj.name.substring(1);
     const makeCard = 
     `<div class="card">
         <div class="card-image">
@@ -187,12 +200,13 @@ const cardFactory = (obj) => {
             <div class="card-subtitle text-gray">${obj.id}</div>
         </div>
         <div class="card-body">
-            <div class="card-subtitle">Category: ${capitalizedCategory}</div>
+            <div id="cardCategory" class="card-subtitle">${capitalizedCategory}</div>
         </div>
         <div class="card-footer">
-            <i class="icon icon-bookmark"></i>
+            <i class="${bookmarkClass}" onClick="this.parentElement.parentElement.remove(); showOverlayToast();"></i>
         </div>
     </div>`;
+    
     return makeCard;
 }
 
@@ -212,6 +226,7 @@ document.addEventListener('click', function(event) {
         const cardExists = cardDataRetreived.some(savedCard => savedCard.id === cardData.id);
 
         if(!cardExists){
+            event.target.classList.toggle("savedCardsMain-pressed");
             console.log("Card doesnt exists adding now");
             // If the card data doesn't exist, add it to savedCardData
             cardDataRetreived.push(cardData);
@@ -220,6 +235,9 @@ document.addEventListener('click', function(event) {
             localStorage.setItem('savedCard', JSON.stringify(cardDataRetreived));
             // Update the UI to display the saved card
         }else{
+            savedCardData = cardDataRetreived.filter(savedCard => savedCard.id !== cardData.id);
+            event.target.classList.toggle("savedCardsMain-pressed");
+            localStorage.setItem('savedCard', JSON.stringify(savedCardData));
             console.log("Card already exists");
         }
     }
@@ -230,14 +248,21 @@ function getSavedCardData() {
     return savedCardData ? JSON.parse(savedCardData) : [];
 }
 
-
-function displayCard(obj) {
-    let parentNode = document.getElementById('main');
-    console.log(parentNode);
-    parentNode.insertAdjacentHTML('afterbegin', cardFactory(obj));
-}
 function displayTypeCard(obj) {
     let parentNode = document.getElementById('main');
     console.log(parentNode);
     parentNode.insertAdjacentHTML('afterbegin', cardMachine(obj));
 }
+
+function showOverlayToast() {
+    var toast = document.getElementById('toastMsg');
+    if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+        toast.textContent = "Unsaved, Back to Their Home they go!";
+    }else{
+        toast.textContent = "Saved, Check the Icon at the Top!";
+    }
+    toast.style.display = 'block';
+    setTimeout(function() {
+      toast.style.display = 'none';
+    }, 5000); // Adjust the timeout (milliseconds) as needed
+  }
