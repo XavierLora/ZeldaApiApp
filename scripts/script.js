@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     showSavedCards();
     setTimeout(function() {
         var toast = document.getElementById('toastMsg');
-        toast.textContent = "No Items Saved Yet, Click the Drop Down Above!";
+        toast.textContent = "No Items Saved! Click the drop down!";
         toast.style.display = 'block';
         setTimeout(function() {
             toast.style.display = 'none';
@@ -257,9 +257,9 @@ function displayTypeCard(obj) {
 function showOverlayToast() {
     var toast = document.getElementById('toastMsg');
     if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
-        toast.textContent = "Unsaved, Back to Their Home they go!";
+        toast.textContent = "Unsaved! Back to their home they go!";
     }else{
-        toast.textContent = "Saved, Check the Icon at the Top!";
+        toast.textContent = "Saved! Check the icon at the top!";
     }
     toast.style.display = 'block';
     setTimeout(function() {
