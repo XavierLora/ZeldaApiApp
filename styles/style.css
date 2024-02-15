@@ -100,7 +100,7 @@ a:hover{
     padding-top: 5vh;
     width: 100%;
     place-items: center;
-    padding-bottom: 15vh;
+    padding-bottom: 20vh;
     scrollbar-width: thin;
 
     scrollbar-width: none; /* Firefox */
