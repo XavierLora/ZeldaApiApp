@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 CreatureCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        searchBarInput.value = "";
         if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
             document.getElementById("savedCards").classList.remove("savedCards-pressed");
         }
@@ -54,6 +55,7 @@ CreatureCheckBox.addEventListener('change', function(){
 
 EquipmentCheckBox.addEventListener('change', function(){
     if (this.checked) { // Check if the checkbox is checked
+        searchBarInput.value = "";
         if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
             document.getElementById("savedCards").classList.remove("savedCards-pressed");
         }
@@ -76,6 +78,7 @@ EquipmentCheckBox.addEventListener('change', function(){
 });
 
 MaterialCheckBox.addEventListener('change', function(){
+    searchBarInput.value = "";
     if (this.checked) { // Check if the checkbox is checked
         if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
             document.getElementById("savedCards").classList.remove("savedCards-pressed");
@@ -98,6 +101,7 @@ MaterialCheckBox.addEventListener('change', function(){
 });
 
 MonsterCheckBox.addEventListener('change', function(){
+    searchBarInput.value = "";
     if (this.checked) { // Check if the checkbox is checked
         if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
             document.getElementById("savedCards").classList.remove("savedCards-pressed");
@@ -202,6 +206,7 @@ function filterAndDisplaySavedCards(searchText) {
 
 
 document.getElementById("savedCards").addEventListener("click", function(){
+    searchBarInput.value = "";
     if(this.classList.contains("savedCards-pressed")){
         removeCurrentCards();
         this.classList.toggle("savedCards-pressed");
