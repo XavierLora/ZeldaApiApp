@@ -12,6 +12,9 @@ function uncheckAllCheckboxes() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    if (!localStorage.getItem('savedCard')) {
+        localStorage.setItem('savedCard', '[]');
+    }
     searchBarInput.value = "";
     showSavedCards();
     document.getElementById("savedCards").classList.add("savedCards-pressed");
@@ -128,7 +131,7 @@ const doneTypingInterval = 500; // 500ms delay
 
 searchBarInput.addEventListener("input", function() {
     document.getElementById('main').scrollTop = 0;
-    if(document.getElementById("savedCards").classList.contains("savedCards-pressed") && (localStorage.getItem('savedCard') !== '[]')){
+    if(document.getElementById("savedCards").classList.contains("savedCards-pressed") && ((localStorage.getItem('savedCard') !== '[]'))){
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
             // Perform search after 500ms delay
