@@ -123,7 +123,8 @@ let typingTimer;
 const doneTypingInterval = 500; // 500ms delay
 
 searchBarInput.addEventListener("input", function() {
-    if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+    document.getElementById('main').scrollTop = 0;
+    if(document.getElementById("savedCards").classList.contains("savedCards-pressed") && (localStorage.getItem('savedCard') !== '[]')){
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
             // Perform search after 500ms delay
@@ -138,6 +139,10 @@ searchBarInput.addEventListener("input", function() {
             }
         }, doneTypingInterval);
     }else{
+        document.getElementById('main').scrollTop = 0;
+        if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+            document.getElementById("savedCards").classList.remove("savedCards-pressed");
+        }
         const search = async () => {
             fadeMain();
             const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all');
@@ -159,6 +164,7 @@ searchBarInput.addEventListener("input", function() {
                     filteredCards.forEach(card => {
                         displayTypeCard(card);
                     });
+                    document.getElementById('main').scrollTop = 0;
                 } else {
                     for(var i = 0; i < myJsonData.data.length; i++){
                         var obj = myJsonData.data[i];
@@ -168,9 +174,12 @@ searchBarInput.addEventListener("input", function() {
                     fadeMain();
                 }
             }, doneTypingInterval);
+            
             fadeMain();
+            document.getElementById('main').scrollTop = 0;
         };
         search();
+        document.getElementById('main').scrollTop = 0;
     }
 });
 
@@ -346,4 +355,16 @@ function showOverlayToast() {
     }, 5000); // Adjust the timeout (milliseconds) as needed
   }
 
-  
+  function checkAndCloseKeyboard() {
+    // Check if any input element is focused
+    const activeElement = document.activeElement;
+    
+    // Check if the active element is an input or textarea
+    if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+        // Blur the active input element to close the keyboard
+        activeElement.blur();
+    }
+}
+
+// Event listener for the touchstart event to detect screen touch
+document.addEventListener('touchstart', checkAndCloseKeyboard);
