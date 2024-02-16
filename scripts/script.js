@@ -210,23 +210,16 @@ function filterAndDisplaySavedCards(searchText) {
 
 document.getElementById("savedCards").addEventListener("click", function(){
     var toast = document.getElementById('toastMsg');
-    if(localStorage.getItem('savedCard') !== '[]'){
-        toast.textContent = "No Saved Items, Go Find Em!";
-        toast.style.display = 'block';
-        setTimeout(function() {
-            toast.style.display = 'none';
-        }, 5000);
-    }
     searchBarInput.value = "";
     if(this.classList.contains("savedCards-pressed")){
         removeCurrentCards();
         this.classList.toggle("savedCards-pressed");
     }else{
         this.classList.toggle("savedCards-pressed");
-    const savedCardsCall = async () => {
-        showSavedCards();
-        document.getElementById('main').scrollTop = 0;
-    }
+        const savedCardsCall = async () => {
+            showSavedCards();
+            document.getElementById('main').scrollTop = 0;
+        }
     savedCardsCall();
     }
 });
