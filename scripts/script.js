@@ -2,6 +2,7 @@ const CreatureCheckBox = document.getElementById("creatureCheck");
 const EquipmentCheckBox = document.getElementById("equipmentCheck");
 const MaterialCheckBox = document.getElementById("materialCheck");
 const MonsterCheckBox = document.getElementById("monsterCheck");
+const searchBarInput = document.getElementById("searchBar");
 
 function uncheckAllCheckboxes() {
     CreatureCheckBox.checked = false;
@@ -11,14 +12,19 @@ function uncheckAllCheckboxes() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    searchBarInput.value = "";
     showSavedCards();
+    document.getElementById("savedCards").classList.add("savedCards-pressed");
+    // Check if localStorage is empty after a delay
     setTimeout(function() {
-        var toast = document.getElementById('toastMsg');
-        toast.textContent = "No Items Saved! Click the drop down!";
-        toast.style.display = 'block';
-        setTimeout(function() {
-            toast.style.display = 'none';
-        }, 5000); // Adjust the timeout (milliseconds) as needed
+        if (localStorage.getItem('savedCard') === null || localStorage.getItem('savedCard') === '[]') {
+            var toast = document.getElementById('toastMsg');
+            toast.textContent = "No Items Saved! Click the drop down!";
+            toast.style.display = 'block';
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 5000); // Adjust the timeout (milliseconds) as needed
+        }
     }, 4000);
 });
 
@@ -112,6 +118,79 @@ MonsterCheckBox.addEventListener('change', function(){
         removeCardsByCategory("monsters");
     }
 });
+
+let typingTimer;
+const doneTypingInterval = 500; // 500ms delay
+
+searchBarInput.addEventListener("input", function() {
+    if(document.getElementById("savedCards").classList.contains("savedCards-pressed")){
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            // Perform search after 500ms delay
+            const searchText = searchBarInput.value.trim().toLowerCase();
+            if (searchText !== '') {
+                fadeMain();
+                filterAndDisplaySavedCards(searchText);
+            } else {
+                // If search input is empty, show all cards
+                fadeMain();
+                showSavedCards();
+            }
+        }, doneTypingInterval);
+    }else{
+        const search = async () => {
+            fadeMain();
+            const data = await fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all');
+            const myJsonData = await data.json();
+            console.log(myJsonData);
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                // Perform search after 500ms delay
+                const searchText = searchBarInput.value.trim().toLowerCase();
+                uncheckAllCheckboxes();
+                if (searchText !== '') {
+                    filteredCards = myJsonData.data.filter(card => {
+                        return card.name.toLowerCase().includes(searchText) || card.category.toLowerCase().includes(searchText) || card.id.toString().includes(searchText);
+                    });
+                    removeCurrentCards();
+                    fadeMain();
+
+                    // Display filtered cards
+                    filteredCards.forEach(card => {
+                        displayTypeCard(card);
+                    });
+                } else {
+                    for(var i = 0; i < myJsonData.data.length; i++){
+                        var obj = myJsonData.data[i];
+                        displayTypeCard(obj);
+                    }
+                    document.getElementById('main').scrollTop = 0;
+                    fadeMain();
+                }
+            }, doneTypingInterval);
+            fadeMain();
+        };
+        search();
+    }
+});
+
+function filterAndDisplaySavedCards(searchText) {
+    const savedCardData = getSavedCardData();
+    console.log(savedCardData);
+    const filteredCards = savedCardData.filter(card => {
+        return card.name.toLowerCase().includes(searchText) || card.category.toLowerCase().includes(searchText) || card.id.includes(searchText);
+    });
+
+    // Remove existing cards before displaying filtered cards
+    removeCurrentCards();
+    fadeMain();
+
+    // Display filtered cards
+    filteredCards.forEach(card => {
+        displayTypeCard(card);
+    });
+}
+
 
 document.getElementById("savedCards").addEventListener("click", function(){
     if(this.classList.contains("savedCards-pressed")){
@@ -266,3 +345,5 @@ function showOverlayToast() {
       toast.style.display = 'none';
     }, 5000); // Adjust the timeout (milliseconds) as needed
   }
+
+  

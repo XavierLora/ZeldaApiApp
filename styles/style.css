@@ -27,7 +27,7 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 1;
-    text-align: center;
+    text-align: center
 }
 #loadLogo{
     width: 100%;
